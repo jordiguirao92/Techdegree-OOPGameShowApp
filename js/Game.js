@@ -33,10 +33,12 @@
     * Begins game by selecting a random phrase and displaying it to user
     */
     startGame() {
-        this.resetGame();
         document.querySelector('#overlay').style.display = "none"; //document.querySelector('#overlay').classList.add('hide');
         this.activePhrase = this.getRandomPhrase();
         this.activePhrase.addPhraseToDisplay();
+
+        let message = document.querySelector('#game-over-message');
+        message.classList.remove('zoomIn', 'fadeInDownBig', 'animated');
     }
 
     /**
@@ -98,10 +100,14 @@
         let message = document.querySelector('#game-over-message');
         if (gameWon === false){
             message.textContent = "Sorry, you lose!";
+            message.classList.add('animated','fadeInDownBig');
             overlay.className = "lose";
+            this.resetGame();
         } else if (gameWon === true) {
             message.textContent = "Congratulation, you win!";
+            message.classList.add('animated','zoomIn');
             overlay.className = "win";
+            this.resetGame();
         }
 
     }
@@ -114,6 +120,7 @@
     * Reset all of the heart images
     */
     resetGame() {
+        keyPressed = [];
         this.missed = 0; 
         const keysLetters = document.querySelectorAll('.key');
         for(let i = 0; i < keysLetters.length; i++){
@@ -125,6 +132,8 @@
 
         const heartImages = document.querySelectorAll('#scoreboard img');
         heartImages.forEach(i => {i.src = "images/liveHeart.png"}); //An alternative to for(). 
+
+        
     }
  }
   
